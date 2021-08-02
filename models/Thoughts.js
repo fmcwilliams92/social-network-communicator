@@ -20,8 +20,5 @@ const ThoughtSchema = new Schema({
       return moment(createdAtVal).format('MMMM Do YYYY, h:mm:ss a');
     }
   },
-  toJSON: {
-    virtuals: true
-  },
   id: false
 });

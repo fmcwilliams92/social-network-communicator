@@ -19,3 +19,12 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social-network'
 mongoose.set('debug', true);
 app.listen(PORT, () => console.log(`
   Connected on localhost:${PORT}`));
+
+// not perfect, just an idea
+// app.get('/api/users', (req, resp) => {
+//   const ans = () => {
+//     // get the users from the db
+//     // models will come into play
+//   };
+//   resp.json(answer)
+// });

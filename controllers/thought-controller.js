@@ -1,4 +1,4 @@
-const { Thoughts } = require('../models');
+const { Thoughts } = require('../models/Thoughts');
 
 const thoughtController = {
   // get all thoughts
@@ -11,14 +11,12 @@ const thoughtController = {
       });
   },
 
-  // need method to find all users
-
   // get one thought by id
   getThoughtsById({ params }, res) {
-    Thought.findOne({ _id: params.id })
+    Thoughts.findOne({ _id: params.id })
       .then(dbThoughtData => {
         // If no thought is found, send 404
-        if (!ddThoughtData) {
+        if (!dbThoughtData) {
           res.status(404).json({ message: 'No thought found with this id!' });
           return;
         }
@@ -30,17 +28,16 @@ const thoughtController = {
       });
     },
 
-    // get one user by id
-
     // create a thought
     createThought({ body }, res) {
-      Thought.create(body)
+      Thoughts.create(body)
         .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => res.status(400).json(err));
     },
+
     // delete pizza
     deleteThought({ params }, res) {
-      Thought.findOneAndDelete({ _id: params.id })
+      Thoughts.findOneAndDelete({ _id: params.id })
         .then(dbThoughtData => {
           if (!dbThoughtData) {
             res.status(404).json({ message: 'No thought found with this id!' });
@@ -49,9 +46,19 @@ const thoughtController = {
           res.json(dbThoughtData);
         })
         .catch(err => res.status(400).json(err));
-    }
+    },
+
+    updateThought({ params, body }, res) {
+      Thoughts.findOneAndUpdate({ _id: params.id }, body, { new: true })
+        .then(dbThoughtData => {
+          if (!dbThoughtData) {
+            res.status(404).json({ message: 'No thought found with this id!' });
+            return;
+          }
+          res.json(dbThoughtData);
+        })
+        .catch(err => res.status(400).json(err));
+    },
 };
 
-thoughtController();
-
-module.exports = socialController;
+module.exports = thoughtController;
